@@ -15,7 +15,7 @@ int main(void)
 	int numtokens = 0;
 
 	if (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO))
-		prompt = "($) ";
+		prompt = "./shell: ";
 	while (1)
 	{
 		write(STDIN_FILENO, prompt, strlen(prompt));
