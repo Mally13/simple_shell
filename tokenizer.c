@@ -14,7 +14,7 @@ int count_tokens(char *commandline)
 	if (!commandline_copy)
 	{
 		perror("Memory allocation error");
-		return -1;
+		return (-1);
 	}
 	token = strtok(commandline_copy, delim);
 	while (token != NULL)
