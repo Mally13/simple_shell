@@ -8,14 +8,15 @@
 int main(void)
 {
 	char **argv;
+	int argc;
 	char *prompt = "", exit_msg[] = "exit\n";
 	char *commandline = NULL, *cmdline_copy = NULL;
 	size_t n = 0;
 	ssize_t nchars_read;
-	int numtokens = 0;
+	int numtokens = 0, i;
 
 	if (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO))
-		prompt = "./shell: ";
+		prompt = "($) ";
 	while (1)
 	{
 		write(STDIN_FILENO, prompt, strlen(prompt));
@@ -27,17 +28,21 @@ int main(void)
 			write(STDOUT_FILENO, exit_msg, strlen(exit_msg));
 			return (-1);
 		}
-		cmdline_copy = malloc(sizeof(char) * nchars_read);
+		cmdline_copy = strdup(commandline);
 		if (cmdline_copy == NULL)
 		{
 			perror("");
 			return (-1);
 		}
-		strcpy(cmdline_copy, commandline);
 		numtokens = count_tokens(commandline);
-		argv = malloc(sizeof(char *) * (numtokens + 1));
+		argc = numtokens + 1;
+		argv = malloc(sizeof(char *) * argc);
 		store_tokens(cmdline_copy, argv);
 		execute_cmd(argv);
+	}
+	for (i = 0; i < argc; i++)
+	{
+		free(argv[i]);
 	}
 	free(commandline);
 	free(cmdline_copy);

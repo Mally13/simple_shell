@@ -3,40 +3,42 @@
  * execute_cmd - execute given command
  * @argv: Command argument
  */
-
 void execute_cmd(char **argv)
 {
-	char *command = NULL;
+	char *command = NULL, *absolute_command = NULL, *error_msg;
 	pid_t pid;
 	int status;
 
 	if (argv)
 	{
 		command = argv[0];
+
 		if (strcmp(command, "exit") == 0)
 			handle_exit();
-		else if (strcmp(command, "env") == 0)
+		if (strcmp(command, "env") == 0)
 			handle_env();
-		else
+		absolute_command = get_cmd_path(command);
+		if (absolute_command && access(absolute_command, X_OK) == 0)
 		{
-			if (command && access(command, X_OK) == 0 && argv[1] == NULL)
+			pid = fork();
+			if (pid < 0)
+				perror("Error:");
+			else if (pid == 0)
 			{
-				pid = fork();
-				if (pid < 0)
-					perror("");
-				else if (pid == 0)
-				{
-					if (system(command) == -1)
-						perror("");
-				}
-				else
-					wait(&status);
+				if (execve(absolute_command, argv, NULL) == -1)
+					perror("Error:");
 			}
 			else
-			{
-				write(STDOUT_FILENO, "No such file or directory\n",
-						strlen("No such file or directory\n"));
-			}
+				wait(&status);
+		}
+		else
+		{
+			error_msg = malloc(sizeof(char *) + ((strlen(": command not found")) +
+												 strlen(command) + 1));
+			strcpy(error_msg, command);
+			strcat(error_msg, ": command not found\n");
+			write(STDOUT_FILENO, error_msg, strlen(error_msg));
+			free(error_msg);
 		}
 	}
 }

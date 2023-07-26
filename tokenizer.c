@@ -7,15 +7,22 @@
 int count_tokens(char *commandline)
 {
 	int numtokens = 0;
-	char *token;
+	char *commandline_copy, *token;
 	const char *delim = " \n";
 
-	token = strtok(commandline, delim);
+	commandline_copy = strdup(commandline);
+	if (!commandline_copy)
+	{
+		perror("Memory allocation error");
+		return -1;
+	}
+	token = strtok(commandline_copy, delim);
 	while (token != NULL)
 	{
 		numtokens++;
 		token = strtok(NULL, delim);
 	}
+	free(commandline_copy);
 	return (numtokens);
 }
 
@@ -34,10 +41,16 @@ void store_tokens(char *cmdline_copy, char **argv)
 	token = strtok(cmdline_copy, delim);
 	for (i = 0; token != NULL; i++)
 	{
-		argv[i] = malloc(sizeof(char) * strlen(token));
-		strcpy(argv[i], token);
+		argv[i] = strdup(token);
+		;
+		if (!argv[i])
+		{
+			perror("Memory allocation error");
+			return;
+		}
 
 		token = strtok(NULL, delim);
 	}
 	argv[i] = NULL;
+	free(cmdline_copy);
 }
