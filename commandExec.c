@@ -14,9 +14,15 @@ void execute_cmd(char **argv)
 		command = argv[0];
 
 		if (strcmp(command, "exit") == 0)
+		{
 			handle_exit();
+			return;
+		}
 		if (strcmp(command, "env") == 0)
+		{
 			handle_env();
+			return;
+		}
 		absolute_command = get_cmd_path(command);
 		if (absolute_command && access(absolute_command, X_OK) == 0)
 		{
