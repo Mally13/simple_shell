@@ -1,14 +1,14 @@
-#include "main.h"
+#include "shell.h"
 /**
-* handle_exit - exit the shell
-*/
+ * handle_exit - exit the shell
+ */
 void handle_exit(void)
 {
 	exit(0);
 }
 /**
-* handle_env - handle environ variable
-*/
+ * handle_env - handle environ variable
+ */
 void handle_env(void)
 {
 	char **env;

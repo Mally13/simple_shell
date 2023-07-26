@@ -29,7 +29,7 @@ int count_tokens(char *commandline);
 void store_tokens(char *cmdline_copy, char **argv);
 void execute_cmd(char **argv);
 char *get_cmd_path(char *command);
-void handle_env();
-void handle_exit();
+void handle_env(void);
+void handle_exit(void);
 
 #endif /* end ifndef */
