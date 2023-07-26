@@ -3,6 +3,7 @@
  * execute_cmd - execute given command
  * @argv: Command argument
  */
+
 void execute_cmd(char **argv)
 {
 	char *command = NULL, *absolute_command = NULL, *error_msg;
@@ -27,7 +28,7 @@ void execute_cmd(char **argv)
 				else if (pid == 0)
 				{
 					if (execve(absolute_command, argv, NULL) == -1)
-						perror("");
+						perror(command);
 				}
 				else
 				{
@@ -36,12 +37,13 @@ void execute_cmd(char **argv)
 			}
 			else
 			{
-				error_msg = malloc(sizeof(char *) + ((strlen(": command not found")) +
-													 strlen(command) + 1));
-				strcpy(error_msg, command);
-				strcat(error_msg, ": command not found\n");
-				write(STDOUT_FILENO, error_msg, strlen(error_msg));
-				free(error_msg);
+				error_msg = malloc(strlen(command) + strlen(": command not found") + 2);
+				if (error_msg)
+				{
+					sprintf(error_msg, "%s: command not found\n", command);
+					write(STDOUT_FILENO, error_msg, strlen(error_msg));
+					free(error_msg);
+				}
 			}
 		}
 	}
