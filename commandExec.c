@@ -27,10 +27,7 @@ void execute_cmd(char **argv)
 				else if (pid == 0)
 				{
 					if (execve(absolute_command, argv, NULL) == -1)
-					{
 						perror("");
-						exit(EXIT_FAILURE);
-					}
 				}
 				else
 				{
