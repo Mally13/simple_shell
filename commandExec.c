@@ -15,6 +15,7 @@ void execute_cmd(char **argv)
 
 		if (strcmp(command, "exit") == 0)
 		{
+			free(command);
 			handle_exit();
 			return;
 		}
