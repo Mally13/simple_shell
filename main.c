@@ -24,11 +24,8 @@ int main(void)
 		{
 			if (feof(stdin))
 				break;
-			else
-			{
-				write(STDOUT_FILENO, exit_msg, strlen(exit_msg));
-				return (-1);
-			}
+			write(STDOUT_FILENO, exit_msg, strlen(exit_msg));
+			return (-1);
 		}
 		cmdline_copy = malloc(sizeof(char) * nchars_read);
 		if (cmdline_copy == NULL)

@@ -6,14 +6,10 @@
  */
 char *get_cmd_path(char *command)
 {
-	char *path, *path_duplicate, *path_token, *file_path;
-	char *current_dir_path;
+	char *path = getenv("PATH"), *path_duplicate, *path_token, *file_path;
 	int command_len, directory_len;
 	struct stat buffer;
 
-	if (!command || strlen(command) == 0)
-		return NULL;
-	path = getenv("PATH");
 	if (path)
 	{
 		path_duplicate = strdup(path);
@@ -31,7 +27,6 @@ char *get_cmd_path(char *command)
 			strcpy(file_path, path_token);
 			strcat(file_path, "/");
 			strcat(file_path, command);
-
 			if (stat(file_path, &buffer) == 0)
 			{
 				free(path_duplicate);
@@ -47,8 +42,7 @@ char *get_cmd_path(char *command)
 	}
 	if (stat(command, &buffer) == 0)
 	{
-		current_dir_path = strdup(command);
-		return (current_dir_path);
+		return (command);
 	}
 	return (NULL);
 }

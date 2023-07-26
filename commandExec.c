@@ -31,9 +31,7 @@ void execute_cmd(char **argv)
 						perror(command);
 				}
 				else
-				{
 					wait(&status);
-				}
 			}
 			else
 			{
