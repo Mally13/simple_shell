@@ -7,13 +7,11 @@
 
 int main(void)
 {
-	char **argv;
-	int argc;
-	char *prompt = "", exit_msg[] = "exit\n";
+	int numtokens = 0, i, argc;
+	char **argv, *prompt = "", exit_msg[] = "exit\n";
 	char *commandline = NULL, *cmdline_copy = NULL;
 	size_t n = 0;
 	ssize_t nchars_read;
-	int numtokens = 0, i;
 
 	if (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO))
 		prompt = "($) ";
@@ -28,12 +26,15 @@ int main(void)
 			write(STDOUT_FILENO, exit_msg, strlen(exit_msg));
 			return (-1);
 		}
-		cmdline_copy = strdup(commandline);
+		if (commandline[nchars_read - 1] == '\n')
+			commandline[nchars_read - 1] = '\0';
+		cmdline_copy = malloc(sizeof(char) * nchars_read);
 		if (cmdline_copy == NULL)
 		{
 			perror("");
 			return (-1);
 		}
+		strcpy(cmdline_copy, commandline);
 		numtokens = count_tokens(commandline);
 		argc = numtokens + 1;
 		argv = malloc(sizeof(char *) * argc);

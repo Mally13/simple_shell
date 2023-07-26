@@ -46,11 +46,12 @@ void store_tokens(char *cmdline_copy, char **argv)
 		if (!argv[i])
 		{
 			perror("Memory allocation error");
+			free(token);
 			return;
 		}
 
 		token = strtok(NULL, delim);
 	}
 	argv[i] = NULL;
-	free(cmdline_copy);
+	free(token);
 }
