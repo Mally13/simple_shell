@@ -21,8 +21,8 @@ extern char **environ;
  */
 typedef struct builtin_s
 {
-    char *name;
-    int (*f)(char **argv, char **front);
+	char *name;
+	int (*f)(char **argv, char **front);
 } builtin_t;
 
 int count_tokens(char *commandline);
