@@ -9,7 +9,7 @@ void execute_cmd(char **argv)
 	pid_t pid;
 	int status;
 
-	if (argv)
+	if (argv && argv[0])
 	{
 		command = argv[0];
 
