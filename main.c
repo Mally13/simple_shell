@@ -38,12 +38,19 @@ int main(void)
 		numtokens = count_tokens(commandline);
 		argc = numtokens + 1;
 		argv = malloc(sizeof(char *) * argc);
+		if (argv == NULL)
+		{
+			perror("");
+			free(cmdline_copy);
+			return (-1);
+		}
 		store_tokens(cmdline_copy, argv);
 		execute_cmd(argv);
 		for (i = 0; i < argc; i++)
 			free(argv[i]);
+		free(argv);
+		free(cmdline_copy);
 	}
 	free(commandline);
-	free(argv);
 	return (0);
 }
