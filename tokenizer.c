@@ -53,5 +53,4 @@ void store_tokens(char *cmdline_copy, char **argv)
 		token = strtok(NULL, delim);
 	}
 	argv[i] = NULL;
-	free(token);
 }

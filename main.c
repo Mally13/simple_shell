@@ -40,11 +40,10 @@ int main(void)
 		argv = malloc(sizeof(char *) * argc);
 		store_tokens(cmdline_copy, argv);
 		execute_cmd(argv);
+		for (i = 0; i < argc; i++)
+			free(argv[i]);
 	}
-	for (i = 0; i < argc; i++)
-		free(argv[i]);
 	free(commandline);
-	free(cmdline_copy);
 	free(argv);
 	return (0);
 }
