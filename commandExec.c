@@ -53,6 +53,7 @@ void execute_cmd(char **argv)
 			write(STDOUT_FILENO, error_msg, strlen(error_msg));
 			free(error_msg);
 		}
+		free(absolute_command);
 		free(argv);
 		free(command);
 	}
