@@ -21,10 +21,7 @@ void execute_cmd(char **argv)
 			return;
 		}
 		if (strcmp(command, "cd") == 0)
-		{
 			changeDirectory(argv);
-			return;
-		}
 		absolute_command = get_cmd_path(command);
 		if (absolute_command && access(absolute_command, X_OK) == 0)
 		{
