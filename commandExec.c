@@ -54,7 +54,5 @@ void execute_cmd(char **argv)
 			free(error_msg);
 		}
 		free(absolute_command);
-		free(argv);
-		free(command);
 	}
 }

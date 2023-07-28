@@ -5,7 +5,8 @@
  */
 void handle_exit(void)
 {
-	_exit(0);
+	int status = 0;
+	_exit(status);
 }
 /**
  * handle_env - handle environ variable
