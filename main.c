@@ -52,7 +52,5 @@ int main(void)
 		free(argv);
 		free(cmdline_copy);
 	}
-	free(commandline);
-	free(prompt);
 	return (0);
 }
