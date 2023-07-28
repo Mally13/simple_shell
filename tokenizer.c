@@ -23,7 +23,6 @@ int count_tokens(char *commandline)
 		token = strtok(NULL, delim);
 	}
 	free(commandline_copy);
-	free(commandline);
 	return (numtokens);
 }
 

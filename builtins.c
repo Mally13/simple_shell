@@ -2,6 +2,7 @@
 /**
  * handle_exit - exit the shell
  * Return: 0
+ * code: Argument
  */
 void handle_exit(char *code)
 {
@@ -59,6 +60,7 @@ int changeDirectory(char **argv)
 	getcwd(currentDirectory, 1024);
 	setenv("PWD", currentDirectory, 0);
 	free(currentDirectory);
+	free(argv);
 
 	return (0);
 }

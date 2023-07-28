@@ -38,7 +38,6 @@ void execute_cmd(char **argv)
 			}
 			else
 				wait(&status);
-			free(absolute_command);
 		}
 		else
 		{
