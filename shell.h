@@ -31,5 +31,6 @@ void execute_cmd(char **argv);
 char *get_cmd_path(char *command);
 void handle_env(void);
 void handle_exit(void);
+int changeDirectory(char **argv);
 
 #endif /* end ifndef */
