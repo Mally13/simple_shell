@@ -13,7 +13,6 @@
 
 extern int errno;
 extern char **environ;
-char *commandline;
 
 /**
  * struct builtin_s - defines builtin commands
