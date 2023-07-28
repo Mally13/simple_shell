@@ -57,7 +57,7 @@ int changeDirectory(char **argv)
 		}
 	}
 	getcwd(currentDirectory, 1024);
-	setenv("PWD", currentDirectory, 0);
+	setenv("PWD", currentDirectory, 1);
 	free(currentDirectory);
 
 	return (0);
