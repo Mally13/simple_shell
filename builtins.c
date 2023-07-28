@@ -5,12 +5,11 @@
  */
 void handle_exit(char *code)
 {
-	int status = 0;
+	int status = 2;
 
 	if (code != NULL)
 		status = atoi(code);
 
-	free(commandline);
 	exit(status);
 }
 /**
@@ -38,6 +37,7 @@ int changeDirectory(char **argv)
 	char *currentDirectory, *dirError = ": no such directory\n";
 
 	currentDirectory = malloc(sizeof(char *) * 1024);
+	getcwd(currentDirectory, 1024);
 	if (argv[1] == NULL)
 	{
 		chdir(getenv("HOME"));
@@ -57,7 +57,6 @@ int changeDirectory(char **argv)
 			return (-1);
 		}
 	}
-	getcwd(currentDirectory, 1024);
 	setenv("PWD", currentDirectory, 0);
 	free(currentDirectory);
 
