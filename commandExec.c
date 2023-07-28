@@ -14,12 +14,7 @@ void execute_cmd(char **argv)
 		command = argv[0];
 
 		if (strcmp(command, "exit") == 0)
-		{
-			free(argv);
-			free(command);
-			handle_exit();
-			return;
-		}
+			handle_exit(argv[1]);
 		if (strcmp(command, "env") == 0)
 		{
 			handle_env();

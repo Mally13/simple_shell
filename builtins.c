@@ -3,10 +3,15 @@
  * handle_exit - exit the shell
  * Return: 0
  */
-void handle_exit(void)
+void handle_exit(char *code)
 {
 	int status = 0;
-	_exit(status);
+
+	if (code != NULL)
+		status = atoi(code);
+
+	free(commandline);
+	exit(status);
 }
 /**
  * handle_env - handle environ variable

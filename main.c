@@ -9,10 +9,11 @@ int main(void)
 {
 	int numtokens = 0, i, argc;
 	char **argv, *prompt = "", exit_msg[] = "exit\n";
-	char *commandline = NULL, *cmdline_copy = NULL;
+	char *cmdline_copy = NULL;
 	size_t n = 0;
 	ssize_t nchars_read;
 
+	commandline = NULL;
 	if (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO))
 		prompt = "($) ";
 	while (1)
@@ -52,5 +53,6 @@ int main(void)
 		free(cmdline_copy);
 	}
 	free(commandline);
+	free(prompt);
 	return (0);
 }

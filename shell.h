@@ -13,6 +13,7 @@
 
 extern int errno;
 extern char **environ;
+char *commandline;
 
 /**
  * struct builtin_s - defines builtin commands
@@ -30,7 +31,7 @@ void store_tokens(char *cmdline_copy, char **argv);
 void execute_cmd(char **argv);
 char *get_cmd_path(char *command);
 void handle_env(void);
-void handle_exit(void);
+void handle_exit(char *);
 int changeDirectory(char **argv);
 
 #endif /* end ifndef */
