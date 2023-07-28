@@ -43,6 +43,7 @@ void execute_cmd(char **argv)
 			}
 			else
 				wait(&status);
+			free(absolute_command);
 		}
 		else
 		{
@@ -53,6 +54,5 @@ void execute_cmd(char **argv)
 			write(STDOUT_FILENO, error_msg, strlen(error_msg));
 			free(error_msg);
 		}
-		free(absolute_command);
 	}
 }
