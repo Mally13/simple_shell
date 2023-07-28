@@ -1,8 +1,9 @@
 #include "shell.h"
 /**
  * handle_exit - exit the shell
+ * Return: 0
  */
-void handle_exit(void)
+int handle_exit(void)
 {
 	exit(0);
 }
