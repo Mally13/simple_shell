@@ -3,10 +3,9 @@
  * handle_exit - exit the shell
  * Return: 0
  */
-int handle_exit(void)
+void handle_exit(void)
 {
-	exit(2);
-	return(2);
+	_exit(0);
 }
 /**
  * handle_env - handle environ variable
