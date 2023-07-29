@@ -1,4 +1,5 @@
 #include "shell.h"
+char *path_duplicate;
 /**
  * get_cmd_path - Get command full path
  * @command: command argument
@@ -35,6 +36,7 @@ char *get_cmd_path(char *command)
 			else
 			{
 				free(file_path);
+				file_path = NULL;
 				path_token = strtok(NULL, ":");
 			}
 		}
@@ -42,7 +44,10 @@ char *get_cmd_path(char *command)
 	}
 	if (stat(command, &buffer) == 0)
 	{
-		return (command);
+		file_path = malloc(strlen(command) + 1);
+		if (!file_path)
+			return (NULL);
+		strcpy(file_path, command);
 	}
-	return (NULL);
+	return (file_path);
 }

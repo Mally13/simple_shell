@@ -1,29 +1,41 @@
 #include "shell.h"
+char **argv;
+char *cmdline_copy = NULL;
+int argc;
+char *commandline = NULL;
+char *prog;
+int execution_count = 0;
+
 /**
  * main - Get user input
  *
  * Return: 0 (success)
  */
 
-int main(void)
+int main(int ac, char **av)
 {
-	int numtokens = 0, i, argc;
-	char **argv, *prompt = "", exit_msg[] = "exit\n";
-	char *commandline = NULL,*cmdline_copy = NULL;
+	int cont = 1, numtokens = 0, i;
+	char *prompt = "", exit_msg[] = "exit\n";
 	size_t n = 0;
 	ssize_t nchars_read;
 
+	prog = av[(ac - ac)];
 	if (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO))
 		prompt = "($) ";
-	while (1)
+	while (cont)
 	{
+		execution_count++;
 		write(STDIN_FILENO, prompt, strlen(prompt));
 		nchars_read = getline(&commandline, &n, stdin);
 		if (nchars_read == -1)
 		{
 			if (feof(stdin))
-				break;
+			{
+				free(commandline);
+				return (-1);
+			}
 			write(STDOUT_FILENO, exit_msg, strlen(exit_msg));
+			free(commandline);
 			return (-1);
 		}
 		if (commandline[nchars_read - 1] == '\n')
@@ -32,6 +44,7 @@ int main(void)
 		if (cmdline_copy == NULL)
 		{
 			perror("");
+			free(commandline);
 			return (-1);
 		}
 		strcpy(cmdline_copy, commandline);
@@ -42,9 +55,17 @@ int main(void)
 		{
 			perror("");
 			free(cmdline_copy);
+			free(commandline);
 			return (-1);
 		}
 		store_tokens(cmdline_copy, argv);
+		if (strcmp(argv[0], "exit") == 0)
+		{
+			handle_exit();
+			cont = 0;
+		}
+		if (strcmp(argv[0], "env") == 0)
+			handle_env();
 		execute_cmd(argv);
 		for (i = 0; i < argc; i++)
 			free(argv[i]);

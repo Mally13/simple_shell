@@ -13,6 +13,13 @@
 
 extern int errno;
 extern char **environ;
+extern char *cmdline_copy;
+extern char **argv;
+extern int argc;
+extern char *commandline;
+extern char *prog;
+extern int execution_count;
+extern char *absolute_command;
 
 /**
  * struct builtin_s - defines builtin commands
@@ -27,7 +34,7 @@ typedef struct builtin_s
 
 int count_tokens(char *commandline);
 void store_tokens(char *cmdline_copy, char **argv);
-void execute_cmd(char **argv);
+int execute_cmd(char **argv);
 char *get_cmd_path(char *command);
 void handle_env(void);
 void handle_exit(char *);
