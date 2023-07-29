@@ -4,16 +4,10 @@
  */
 void handle_exit(void)
 {
-	int status = 0, i;
-
-	status = atoi(argv[1]);
-
-	for (i = 0; i < argc; i++)
-		free(argv[i]);
 	free(argv);
 	free(cmdline_copy);
 	free(commandline);
-	exit(status);
+	exit(errno);
 }
 /**
  * handle_env - handle environ variable
