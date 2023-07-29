@@ -37,21 +37,22 @@ void handle_env(void)
  * @argv: Argument Vaiables
  * Return: Return 0
  */
-int changeDirectory(char **argv)
+void changeDirectory(char **argv)
 {
 	char *currentDirectory, *dirError = ": no such directory\n";
+	int status = 0;
 
 	currentDirectory = getcwd(NULL, 0);
 	if (argv[1] == NULL)
 	{
 		chdir(getenv("HOME"));
-		return (1);
+		exit (status);
 	}
 
 	else if (strcmp(argv[1], "-") == 0)
 	{
 		chdir(getenv("HOME"));
-		return (1);
+		exit (status);
 	}
 
 	else
@@ -67,6 +68,4 @@ int changeDirectory(char **argv)
 	currentDirectory = malloc(sizeof(char *) * 1024);
 	setenv("PWD", currentDirectory, 0);
 	free(currentDirectory);
-
-	return (0);
 }
