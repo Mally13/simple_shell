@@ -4,10 +4,24 @@
  */
 void handle_exit(void)
 {
+	int status = 0, i;
+
+	for (i = 0; i < argc; i++)
+	{
+		if (argv[i] != NULL && strcmp(argv[i], "exit") != 0)
+		{
+			status = atoi(argv[i]);
+		}
+	}
+
+	for (i = 0; i < argc; i++)
+		free(argv[i]);
 	free(argv);
 	free(cmdline_copy);
 	free(commandline);
-	exit(errno);
+	if (errno > 0)
+		exit(errno);
+	exit(status);
 }
 /**
  * handle_env - handle environ variable
