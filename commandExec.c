@@ -12,24 +12,14 @@ void execute_cmd(char **argv)
 	if (argv && argv[0])
 	{
 		command = argv[0];
-
-		if (strcmp(command, "exit") == 0)
-		{
-			free(command);
-			handle_exit();
-			return;
-		}
-		if (strcmp(command, "env") == 0)
-		{
-			handle_env();
-			return;
-		}
 		absolute_command = get_cmd_path(command);
 		if (absolute_command && access(absolute_command, X_OK) == 0)
 		{
 			pid = fork();
 			if (pid < 0)
+			{
 				perror("Error:");
+			}
 			else if (pid == 0)
 			{
 				if (execve(absolute_command, argv, NULL) == -1)
@@ -47,5 +37,6 @@ void execute_cmd(char **argv)
 			write(STDOUT_FILENO, error_msg, strlen(error_msg));
 			free(error_msg);
 		}
+		free(absolute_command);
 	}
 }

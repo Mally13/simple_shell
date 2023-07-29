@@ -13,6 +13,10 @@
 
 extern int errno;
 extern char **environ;
+extern char *cmdline_copy;
+extern char **argv;
+extern int argc;
+extern char *commandline;
 
 /**
  * struct builtin_s - defines builtin commands

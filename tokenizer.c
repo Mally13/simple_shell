@@ -35,17 +35,17 @@ int count_tokens(char *commandline)
 void store_tokens(char *cmdline_copy, char **argv)
 {
 	int i;
-	char *token;
+	char *token, *copy = strdup(cmdline_copy);
 	const char *delim = " \n";
 
-	token = strtok(cmdline_copy, delim);
+	token = strtok(copy, delim);
 	for (i = 0; token != NULL; i++)
 	{
 		argv[i] = strdup(token);
-		;
 		if (!argv[i])
 		{
-			perror("Memory allocation error");
+			perror("");
+			free(copy);
 			free(token);
 			return;
 		}
@@ -53,4 +53,5 @@ void store_tokens(char *cmdline_copy, char **argv)
 		token = strtok(NULL, delim);
 	}
 	argv[i] = NULL;
+	free(copy);
 }

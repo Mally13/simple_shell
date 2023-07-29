@@ -7,7 +7,7 @@
 char *get_cmd_path(char *command)
 {
 	char *path = getenv("PATH"), *path_duplicate, *path_token, *file_path;
-	int command_len, directory_len;
+	int command_len, directory_len, path_found = 0;
 	struct stat buffer;
 
 	if (path)
@@ -29,8 +29,8 @@ char *get_cmd_path(char *command)
 			strcat(file_path, command);
 			if (stat(file_path, &buffer) == 0)
 			{
-				free(path_duplicate);
-				return (file_path);
+				path_found = 1;
+				break;
 			}
 			else
 			{
@@ -40,6 +40,10 @@ char *get_cmd_path(char *command)
 		}
 		free(path_duplicate);
 	}
+	if (path_found)
+		return (file_path);
+	else
+		free(file_path);
 	if (stat(command, &buffer) == 0)
 	{
 		return (command);

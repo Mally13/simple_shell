@@ -4,7 +4,17 @@
  */
 void handle_exit(void)
 {
-	exit(EXIT_SUCCESS);
+	int status = 0, i;
+
+	if (argv[1] != NULL)
+		status = atoi(argv[1]);
+
+	for (i = 0; i < argc; i++)
+		free(argv[i]);
+	free(argv);
+	free(cmdline_copy);
+	free(commandline);
+	exit(status);
 }
 /**
  * handle_env - handle environ variable

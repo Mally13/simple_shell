@@ -1,4 +1,9 @@
 #include "shell.h"
+char **argv;
+char *cmdline_copy = NULL;
+int argc;
+char *commandline = NULL;
+
 /**
  * main - Get user input
  *
@@ -7,9 +12,8 @@
 
 int main(void)
 {
-	int numtokens = 0, i, argc;
-	char **argv, *prompt = "", exit_msg[] = "exit\n";
-	char *commandline = NULL, *cmdline_copy = NULL;
+	int numtokens = 0, i;
+	char *prompt = "", exit_msg[] = "exit\n";
 	size_t n = 0;
 	ssize_t nchars_read;
 
@@ -24,6 +28,7 @@ int main(void)
 			if (feof(stdin))
 				break;
 			write(STDOUT_FILENO, exit_msg, strlen(exit_msg));
+			free(commandline);
 			return (-1);
 		}
 		if (commandline[nchars_read - 1] == '\n')
@@ -32,6 +37,7 @@ int main(void)
 		if (cmdline_copy == NULL)
 		{
 			perror("");
+			free(commandline);
 			return (-1);
 		}
 		strcpy(cmdline_copy, commandline);
@@ -42,9 +48,17 @@ int main(void)
 		{
 			perror("");
 			free(cmdline_copy);
+			free(commandline);
 			return (-1);
 		}
 		store_tokens(cmdline_copy, argv);
+		if (strcmp(argv[0], "exit") == 0)
+		{
+			handle_exit();
+			return (0);
+		}
+		if (strcmp(argv[0], "env") == 0)
+			handle_env();
 		execute_cmd(argv);
 		for (i = 0; i < argc; i++)
 			free(argv[i]);
