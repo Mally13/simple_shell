@@ -30,24 +30,21 @@ int execute_cmd(char **argv)
 					_exit(errno);
 				}
 				free(absolute_command);
-				_exit(1);
+				_exit(errno);
 			}
 			else
 			{
 				waitpid(pid, &status, WUNTRACED);
-				if (WIFEXITED(status))
-					errno = WEXITSTATUS(status);
 				free(absolute_command);
+				_exit(errno);
 			}
 			return (0);
 		}
 		else
 		{
 			free(absolute_command);
-			errno = 127;
 			return (-1);
 		};
 	}
-	errno = 127;
 	return (-1);
 }

@@ -9,7 +9,10 @@ void handle_exit(void)
 	for (i = 0; i < argc; i++)
 	{
 		if (argv[i] != NULL && strcmp(argv[i], "exit") != 0)
-			status += atoi(argv[i]);
+		{
+			status = atoi(argv[i]);
+			printf("%d\n", status);
+		}
 	}
 
 	for (i = 0; i < argc; i++)
