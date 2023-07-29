@@ -6,9 +6,9 @@ void handle_exit(void)
 {
 	int status = 0, i;
 
-	for (i = 1; i < argc; i++)
+	for (i = 0; i < argc; i++)
 	{
-		if (argv[i] != NULL)
+		if (argv[i] != NULL && strcmp(argv[i], "exit") != 0)
 			status += atoi(argv[i]);
 	}
 
