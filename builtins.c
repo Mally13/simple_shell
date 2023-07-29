@@ -6,8 +6,11 @@ void handle_exit(void)
 {
 	int status = 0, i;
 
-	if (argv[1] != NULL)
-		status = atoi(argv[1]);
+	for (i = 0; i < argc; i++)
+	{
+		if (argv[i] != NULL)
+			status += atoi(argv[i]);
+	}
 
 	for (i = 0; i < argc; i++)
 		free(argv[i]);
