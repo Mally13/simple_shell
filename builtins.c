@@ -19,7 +19,7 @@ void handle_exit(void)
 	free(argv);
 	free(cmdline_copy);
 	free(commandline);
-	if (errno > 0)
+	if (errno != 0)
 		exit(errno);
 	exit(status);
 }
