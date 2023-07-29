@@ -64,6 +64,8 @@ int main(int ac, char **av)
 			handle_exit();
 			cont = 0;
 		}
+		if (strcmp(argv[0], "cd") == 0)
+			changeDirectory(argv);
 		if (strcmp(argv[0], "env") == 0)
 			handle_env();
 		execute_cmd(argv);
