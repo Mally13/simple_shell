@@ -4,10 +4,12 @@
  */
 void handle_exit()
 {
-	int status = errno, i;
+	int status = 0, i;
 
 	if (argv[1] != NULL)
 		status = atoi(argv[1]);
+	if (strcmp(argv[0], "exit") != 0)
+		status = errno;
 
 	for (i = 0; i < argc; i++)
 		free(argv[i]);
