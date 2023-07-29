@@ -48,8 +48,9 @@ int main(void)
 		execute_cmd(argv);
 		for (i = 0; i < argc; i++)
 			free(argv[i]);
-		free(argv);
 		free(cmdline_copy);
 	}
+	free(argv);
+	free(commandline);
 	return (0);
 }
