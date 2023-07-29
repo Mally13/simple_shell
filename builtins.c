@@ -2,15 +2,12 @@
 /**
  * handle_exit - exit the shell
  */
-void handle_exit(void)
+void handle_exit()
 {
 	int status = 0, i;
 
-	if (argc > 2 && strcmp(argv[0], "exit") == 0)
-	{
-		for (i = 0; i < argc; i++)
-			status += atoi(argv[i]);
-	}
+	if (argv[1] != NULL)
+		status = atoi(argv[1]);
 	else
 		status = errno;
 
@@ -18,7 +15,6 @@ void handle_exit(void)
 		free(argv[i]);
 	free(argv);
 	free(cmdline_copy);
-	free(commandline);
 	exit(status);
 }
 /**
