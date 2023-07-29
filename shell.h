@@ -19,6 +19,7 @@ extern int argc;
 extern char *commandline;
 extern char *prog;
 extern int execution_count;
+extern char *absolute_command;
 
 /**
  * struct builtin_s - defines builtin commands
@@ -37,6 +38,5 @@ int execute_cmd(char **argv);
 char *get_cmd_path(char *command);
 void handle_env(void);
 void handle_exit(void);
-void print_error_to_stdout(void);
 
 #endif /* end ifndef */

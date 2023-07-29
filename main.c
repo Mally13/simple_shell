@@ -14,7 +14,7 @@ int execution_count = 0;
 
 int main(int ac, char **av)
 {
-	int cont = 1, numtokens = 0, i, error_code;
+	int cont = 1, numtokens = 0, i;
 	char *prompt = "", exit_msg[] = "exit\n";
 	size_t n = 0;
 	ssize_t nchars_read;
@@ -30,7 +30,10 @@ int main(int ac, char **av)
 		if (nchars_read == -1)
 		{
 			if (feof(stdin))
-				break;
+			{
+				free(commandline);
+				return (-1);
+			}
 			write(STDOUT_FILENO, exit_msg, strlen(exit_msg));
 			free(commandline);
 			return (-1);
@@ -63,9 +66,7 @@ int main(int ac, char **av)
 		}
 		if (strcmp(argv[0], "env") == 0)
 			handle_env();
-		error_code = execute_cmd(argv);
-		if (error_code != EXIT_SUCCESS)
-			print_error_to_stdout();
+		execute_cmd(argv);
 		for (i = 0; i < argc; i++)
 			free(argv[i]);
 		free(argv);

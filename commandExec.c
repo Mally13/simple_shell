@@ -1,11 +1,12 @@
 #include "shell.h"
+char *absolute_command = NULL;
 /**
  * execute_cmd - execute given command
  * @argv: Command argument
  */
 int execute_cmd(char **argv)
 {
-	char *command = NULL, *absolute_command = NULL;
+	char *command = NULL;
 	pid_t pid;
 	int status;
 
@@ -18,28 +19,34 @@ int execute_cmd(char **argv)
 			pid = fork();
 			if (pid < 0)
 			{
-				exit(errno);
+				free(absolute_command);
+				_exit(errno);
 			}
 			else if (pid == 0)
 			{
 				if (execve(absolute_command, argv, NULL) == -1)
-					exit(errno);
-				exit(1);
+				{
+					free(absolute_command);
+					_exit(errno);
+				}
+				free(absolute_command);
+				_exit(1);
 			}
 			else
 			{
 				waitpid(pid, &status, WUNTRACED);
 				if (WIFEXITED(status))
 					errno = WEXITSTATUS(status);
+				free(absolute_command);
 			}
 			return (0);
 		}
 		else
 		{
+			free(absolute_command);
 			errno = 127;
 			return (-1);
-		}
-		free(absolute_command);
+		};
 	}
 	errno = 127;
 	return (-1);

@@ -1,4 +1,5 @@
 #include "shell.h"
+char *path_duplicate;
 /**
  * get_cmd_path - Get command full path
  * @command: command argument
@@ -47,8 +48,6 @@ char *get_cmd_path(char *command)
 		if (!file_path)
 			return (NULL);
 		strcpy(file_path, command);
-		return (file_path);
 	}
-	free(file_path);
-	return (NULL);
+	return (file_path);
 }
