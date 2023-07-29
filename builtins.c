@@ -15,6 +15,7 @@ void handle_exit()
 		free(argv[i]);
 	free(argv);
 	free(cmdline_copy);
+	free(commandline);
 	exit(status);
 }
 /**
