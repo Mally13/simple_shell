@@ -6,14 +6,7 @@ void handle_exit(void)
 {
 	int status = 0, i;
 
-	for (i = 0; i < argc; i++)
-	{
-		if (argv[i] != NULL && strcmp(argv[i], "exit") != 0)
-		{
-			status = atoi(argv[i]);
-			printf("%d\n", status);
-		}
-	}
+	status = atoi(argv[1]);
 
 	for (i = 0; i < argc; i++)
 		free(argv[i]);
