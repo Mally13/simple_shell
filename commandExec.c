@@ -3,9 +3,9 @@
  * execute_cmd - execute given command
  * @argv: Command argument
  */
-void execute_cmd(char **argv)
+int execute_cmd(char **argv)
 {
-	char *command = NULL, *absolute_command = NULL, *error_msg;
+	char *command = NULL, *absolute_command = NULL;
 	pid_t pid;
 	int status;
 
@@ -18,25 +18,29 @@ void execute_cmd(char **argv)
 			pid = fork();
 			if (pid < 0)
 			{
-				perror("Error:");
+				exit(errno);
 			}
 			else if (pid == 0)
 			{
 				if (execve(absolute_command, argv, NULL) == -1)
-					perror("Error:");
+					exit(errno);
+				exit(1);
 			}
 			else
-				wait(&status);
+			{
+				waitpid(pid, &status, WUNTRACED);
+				if (WIFEXITED(status))
+					errno = WEXITSTATUS(status);
+			}
+			return (0);
 		}
 		else
 		{
-			error_msg = malloc(sizeof(char *) + ((strlen(": command not found")) +
-												 strlen(command) + 1));
-			strcpy(error_msg, command);
-			strcat(error_msg, ": command not found\n");
-			write(STDOUT_FILENO, error_msg, strlen(error_msg));
-			free(error_msg);
+			errno = 127;
+			return (-1);
 		}
 		free(absolute_command);
 	}
+	errno = 127;
+	return (-1);
 }

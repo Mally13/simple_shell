@@ -7,7 +7,7 @@
 char *get_cmd_path(char *command)
 {
 	char *path = getenv("PATH"), *path_duplicate, *path_token, *file_path;
-	int command_len, directory_len, path_found = 0;
+	int command_len, directory_len;
 	struct stat buffer;
 
 	if (path)
@@ -29,24 +29,26 @@ char *get_cmd_path(char *command)
 			strcat(file_path, command);
 			if (stat(file_path, &buffer) == 0)
 			{
-				path_found = 1;
-				break;
+				free(path_duplicate);
+				return (file_path);
 			}
 			else
 			{
 				free(file_path);
+				file_path = NULL;
 				path_token = strtok(NULL, ":");
 			}
 		}
 		free(path_duplicate);
 	}
-	if (path_found)
-		return (file_path);
-	else
-		free(file_path);
 	if (stat(command, &buffer) == 0)
 	{
-		return (command);
+		file_path = malloc(strlen(command) + 1);
+		if (!file_path)
+			return (NULL);
+		strcpy(file_path, command);
+		return (file_path);
 	}
+	free(file_path);
 	return (NULL);
 }

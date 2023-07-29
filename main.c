@@ -3,6 +3,8 @@ char **argv;
 char *cmdline_copy = NULL;
 int argc;
 char *commandline = NULL;
+char *prog;
+int execution_count = 0;
 
 /**
  * main - Get user input
@@ -10,17 +12,19 @@ char *commandline = NULL;
  * Return: 0 (success)
  */
 
-int main(void)
+int main(int ac, char **av)
 {
-	int numtokens = 0, i;
+	int cont = 1, numtokens = 0, i, error_code;
 	char *prompt = "", exit_msg[] = "exit\n";
 	size_t n = 0;
 	ssize_t nchars_read;
 
+	prog = av[(ac - ac)];
 	if (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO))
 		prompt = "($) ";
-	while (1)
+	while (cont)
 	{
+		execution_count++;
 		write(STDIN_FILENO, prompt, strlen(prompt));
 		nchars_read = getline(&commandline, &n, stdin);
 		if (nchars_read == -1)
@@ -55,11 +59,13 @@ int main(void)
 		if (strcmp(argv[0], "exit") == 0)
 		{
 			handle_exit();
-			return (0);
+			cont = 0;
 		}
 		if (strcmp(argv[0], "env") == 0)
 			handle_env();
-		execute_cmd(argv);
+		error_code = execute_cmd(argv);
+		if (error_code != EXIT_SUCCESS)
+			print_error_to_stdout();
 		for (i = 0; i < argc; i++)
 			free(argv[i]);
 		free(argv);
