@@ -6,12 +6,10 @@ void handle_exit(void)
 {
 	int status = 0, i;
 
-	for (i = 0; i < argc; i++)
+	if (argc > 0 && strcmp(argv[0], "exit") == 0)
 	{
-		if (argv[i] != NULL && strcmp(argv[i], "exit") != 0)
-		{
-			status = atoi(argv[i]);
-		}
+		for (i = 0; i < argc; i++)
+			status += atoi(argv[i]);
 	}
 
 	for (i = 0; i < argc; i++)
@@ -19,8 +17,6 @@ void handle_exit(void)
 	free(argv);
 	free(cmdline_copy);
 	free(commandline);
-	if (errno != 0)
-		exit(errno);
 	exit(status);
 }
 /**
