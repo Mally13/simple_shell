@@ -6,11 +6,13 @@ void handle_exit(void)
 {
 	int status = 0, i;
 
-	if (argc > 0 && strcmp(argv[0], "exit") == 0)
+	if (argc > 2 && strcmp(argv[0], "exit") == 0)
 	{
 		for (i = 0; i < argc; i++)
 			status += atoi(argv[i]);
 	}
+	else
+		status = errno;
 
 	for (i = 0; i < argc; i++)
 		free(argv[i]);
