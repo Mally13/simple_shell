@@ -36,7 +36,7 @@ int execute_cmd(char **argv)
 			{
 				waitpid(pid, &status, WUNTRACED);
 				free(absolute_command);
-				_exit(errno);
+				handle_exit();
 			}
 			return (0);
 		}
