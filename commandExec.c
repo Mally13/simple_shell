@@ -36,11 +36,7 @@ int execute_cmd(char **argv)
 			{
 				waitpid(pid, &status, WUNTRACED);
 				if (WIFEXITED(status))
-				{
 					errno = WEXITSTATUS(status);
-					_exit(errno);
-				}
-				_exit(0);
 				free(absolute_command);
 			}
 			return (0);
